@@ -18,7 +18,6 @@ class Mhome extends CI_Model
     function submit()
     {
         $arr = array(
-             
             'name' => $this->input->post('txtname'),
             'tel' => $this->input->post('txttel'),
             'city' => $this->input->post('txtcity'),
@@ -30,14 +29,15 @@ class Mhome extends CI_Model
             redirect(base_url() . 'test');
         }
     }
+
     function edit($a)
     {
-      
-        $query = $this->db->get_where('users',  array('id' => $a))->row();
+
+        $query = $this->db->get_where('users', array('id' => $a))->row();
         return $query;
-    
     }
-      function update()
+
+    function update()
     {
         $arr = array(
             'id' => $this->input->post('id'),
@@ -46,18 +46,18 @@ class Mhome extends CI_Model
             'city' => $this->input->post('txtcity'),
             'state' => $this->input->post('txtstate'),
         );
-        $update=   $this->db->update('users', $arr, array('id' => $_POST['id']));
+        $update = $this->db->update('users', $arr, array('id' => $_POST['id']));
         if ($update == true) {
 
             redirect(base_url() . 'test');
         }
     }
+
     function delete($a)
     {
-      
-        $query = $this->db->delete('users',  array('id' => $a));
+
+        $query = $this->db->delete('users', array('id' => $a));
         return $query;
-    
     }
 
 }
