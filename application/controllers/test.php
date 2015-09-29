@@ -1,53 +1,45 @@
 <?php
 
-if (!defined('BASEPATH')) exit('No direct script access allowed');
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 
 class Test extends CI_Controller
 {
 
-    public function index()
+    function area_of_circle($radius)
     {
-        $this->load->model('mhome');
-        $row['dt'] = $this->mhome->view();
-        $this->load->view('data_view', $row);
+        $this->load->helper('math');
+        echo "A circle with radius $radius and has area" . circle_area($radius);
     }
 
-    public function add()
+    function show_mysql_date()
     {
-        $this->load->view('add');
+        $this->load->helper('date');
+        echo "Curent date in Mysql format" . date_mysql();
     }
 
-    public function submit()
+    function new_library()
     {
-        $this->load->model('mhome');
-        $this->mhome->submit();
+        $this->load->library('code');
+        $this->code->test('bar');
     }
-
-    public function edit()
+    function form()
     {
-        $this->load->model('mhome');
-        $kd = $this->uri->segment(3);
-        $dt = $this->mhome->edit($kd);
-        $data['kd'] = $dt->id;
-        $data['nm'] = $dt->name;
-        $data['no'] = $dt->tel;
-        $data['ct'] = $dt->city;
-        $data['st'] = $dt->state;
-        $this->load->view('edit', $data);
+        $this->load->library('form_validation');
+        $this->form_validation->test();
+        $this->load->view('test_form');
     }
-
-    public function update()
+    function form_submit()
     {
-        $this->load->model('mhome');
-        $this->mhome->update();
-    }
-
-    public function del()
-    {
-        $this->load->model('mhome');
-        $kd = $this->uri->segment(3);
-        $this->mhome->delete($kd);
-        redirect(base_url() . 'test');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('username','Username','required|alpha_numeric|min_lenght[6]');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('password','Password','required|min_lenght[6]|strong_pass[3]');
+        if(!$this->form_validation->run()){
+            $this->load->view('test_form');
+          
+        }
+        else{ echo "success";}  
     }
 
 }
